@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://prodigyapp.vercel.app/",
+    origin: "https://prodigyapp.vercel.app",
     credentials: true,
   })
 );
