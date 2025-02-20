@@ -1,11 +1,20 @@
-import { useState, useEffect } from 'react';
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isToday, parseISO, isSameDay } from 'date-fns';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  isSameMonth,
+  isToday,
+  parseISO,
+  isSameDay,
+} from "date-fns";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import axios from "axios";
 
 export default function Calendar() {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [view, setView] = useState('month');
+  const [view, setView] = useState("month");
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -14,12 +23,12 @@ export default function Calendar() {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/tasks', {
-        withCredentials: true
+      const response = await axios.get("/tasks", {
+        withCredentials: true,
       });
       setTasks(response.data);
     } catch (error) {
-      console.error('Error fetching tasks:', error);
+      console.error("Error fetching tasks:", error);
     }
   };
 
@@ -36,10 +45,10 @@ export default function Calendar() {
   };
 
   const priorityColors = {
-    Critical: 'bg-red-100 text-red-800',
-    Urgent: 'bg-yellow-100 text-yellow-800',
-    Important: 'bg-blue-100 text-blue-800',
-    Someday: 'bg-gray-100 text-gray-800'
+    Critical: "bg-red-100 text-red-800",
+    Urgent: "bg-yellow-100 text-yellow-800",
+    Important: "bg-blue-100 text-blue-800",
+    Someday: "bg-gray-100 text-gray-800",
   };
 
   return (
@@ -63,7 +72,7 @@ export default function Calendar() {
               <FiChevronLeft className="w-5 h-5" />
             </button>
             <h2 className="text-xl font-semibold">
-              {format(currentDate, 'MMMM yyyy')}
+              {format(currentDate, "MMMM yyyy")}
             </h2>
             <button
               onClick={nextMonth}
@@ -77,7 +86,7 @@ export default function Calendar() {
 
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md">
         <div className="grid grid-cols-7 gap-px bg-gray-200 dark:bg-gray-700">
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
             <div
               key={day}
               className="p-4 text-center font-semibold bg-white dark:bg-gray-800"
@@ -97,20 +106,18 @@ export default function Calendar() {
                 key={day.toString()}
                 className={`min-h-[120px] p-2 bg-white dark:bg-gray-800 ${
                   !isSameMonth(day, currentDate)
-                    ? 'text-gray-400 dark:text-gray-600'
-                    : ''
-                } ${
-                  isToday(day)
-                    ? 'bg-blue-50 dark:bg-blue-900'
-                    : ''
-                }`}
+                    ? "text-gray-400 dark:text-gray-600"
+                    : ""
+                } ${isToday(day) ? "bg-blue-50 dark:bg-blue-900" : ""}`}
               >
-                <div className="font-semibold mb-1">{format(day, 'd')}</div>
+                <div className="font-semibold mb-1">{format(day, "d")}</div>
                 <div className="space-y-1">
                   {dayTasks.map((task) => (
                     <div
                       key={task._id}
-                      className={`text-xs p-1 rounded ${priorityColors[task.priority]}`}
+                      className={`text-xs p-1 rounded ${
+                        priorityColors[task.priority]
+                      }`}
                       title={task.description || task.title}
                     >
                       {task.title}
